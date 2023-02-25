@@ -1,0 +1,86 @@
+<!-- is file mai koi bhi css use krnai sai pdf mai bhi vo hoi css load hoga -->
+
+<link rel="stylesheet" href="/Stylesheets/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<style>
+
+    *{
+        font-family: 'Raleway', sans-serif;  
+    }
+
+</style>
+
+
+<h1 style="text-align: center;  padding-top: 2rem">All<a href=""
+    style="color: var(--primary); text-decoration: none; font-family: 'Dancing Script', cursive;">
+    Users
+</a></h1>
+
+<table style="width: 100%;">
+
+    <tr> 
+
+        <th>Image</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Verified</th>
+
+    </tr>
+
+    <%
+    
+            if(Users.length > 0){
+
+                for(i=0; i<Users.length; i++){
+                    %>
+
+                        <tr>
+                            
+                            <td> <img style="width: 4rem; height: 4rem; border-radius: 50%;" src="http://localhost:5000/Uploads/<%= Users[i].image %>" alt="<%= Users[i].image %>"></td>
+                            <td><%= Users[i].name %></td>
+                            <td><%= Users[i].email %></td>
+                            <td><%= Users[i].mobile %></td>
+                            <td><%
+                                
+                                    if(Users[i].is_verified == 0){
+
+                                        %>
+
+                                            <p>No</p>
+
+                                        <%
+
+                                    }else{
+                                        %>
+
+                                            <p>Yes</p>
+
+                                        <%
+                                    }
+
+                                %></td>
+
+                                
+
+
+                        </tr>
+
+                    <%
+                }
+
+            }else{
+                %>
+                
+                    <tr>
+                        
+                        <td colspan="5">No User Found</td>
+
+                    </tr>
+
+                <%
+            }
+
+    %>
+
+</table>

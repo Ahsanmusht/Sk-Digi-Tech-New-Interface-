@@ -1,0 +1,23 @@
+<% include('../Layouts/Header.ejs') %>
+
+<h1>Admin Forgot</h1>
+
+<%
+
+if(typeof message !== 'undefined'){
+    %>
+        <h4><%= message %></h4>
+    <%
+}
+%>
+
+
+<form action="" method="post">
+
+    <input type="email" name="email" placeholder="enter email" id="">
+    <input type="submit" value="Send">
+
+</form>
+
+
+<% include('../Layouts/Footer.ejs') %>

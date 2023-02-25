@@ -1,0 +1,103 @@
+<% include('../Layouts/Header.ejs') %>
+
+<link rel="stylesheet" href="/Stylesheets/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+<style>
+    input {
+  width: 100%;
+  display: block;
+  border: none;
+  border-bottom: 1px solid #999;
+  padding: 6px 30px;
+  font-family: Poppins;
+  box-sizing: border-box; }
+  input::-webkit-input-placeholder {
+    color: #999; }
+  input::-moz-placeholder {
+    color: #999; }
+  input:-ms-input-placeholder {
+    color: #999; }
+  input:-moz-placeholder {
+    color: #999; }
+  input:focus {
+    border-bottom: 1px solid #222; }
+    input:focus::-webkit-input-placeholder {
+      color: #222; }
+    input:focus::-moz-placeholder {
+      color: #222; }
+    input:focus:-ms-input-placeholder {
+      color: #222; }
+    input:focus:-moz-placeholder {
+      color: #222; }
+
+</style>
+
+<header class="header">
+
+    <div class="container">
+
+          <div class="icons">
+
+            <a href="https://www.facebook.com/groups/1532530887184305">
+              <i class="fa-brands fa-facebook"></i>
+            </a>
+            <a href=""><i class="fab fa-whatsapp"></i></a>
+            <a href="https://github.com/Ahsanmusht?tab=repositories">
+              <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+
+          </div>
+          <div class="profile">
+
+              <div>
+
+                  <i class="fa-solid fa-home"></i> 
+                  <a href="/index">back</a>
+
+              </div>
+
+              <span class="divider">|</span>
+
+              <div>
+
+                <i class="fa-solid fa-sign-out"></i>
+                <a href="/logout">Logout</a>
+
+            </div>
+
+          </div>
+
+    </div>
+
+
+  </header>
+
+<div class="container">
+
+<img style="width: 20%; border-radius: 50%; 
+border: 4px solid #000;  margin-top: 3rem;"
+src="Uploads/<%= user.image%>" alt="">
+
+<form action="" enctype="multipart/form-data" method="post">
+
+    <input type="hidden" name="user_id" value="<%= user._id%>" id="">
+    <br>
+    <input type="file" name="image" value="<%= user.image%>" placeholder="Profile" required>
+<br>
+    <input type="text" name="name" value="<%= user.name%>" placeholder="Name" required>
+<br>
+    <input type="email" name="email" value="<%= user.email%>" placeholder="Email" required>
+<br>
+    <input type="number" name="mobile" value="<%= user.mobile%>" placeholder="Mobile" required>
+<br>
+
+<input class="btn btn-secondary" type="submit" value="Update">
+
+</form>
+
+</div>
+
+
+<% include('../Layouts/Footer.ejs') %>
