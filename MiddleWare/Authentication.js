@@ -1,3 +1,6 @@
+const AddmissionModel = require('../Models/Addmission.Model');
+const UserModel = require('../Models/User.Model');
+
 const IsLoggedIn = async(req, res, next) => {
     try {
         

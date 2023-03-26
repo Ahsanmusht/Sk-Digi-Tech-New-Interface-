@@ -7,7 +7,7 @@ const ExcelJs = require('exceljs');
 
 // CONVERTING EJS TO PDF REQUIRE THINGS
 
-const ejs = require('ejs');
+// const ejs = require('ejs');
 const pdf = require('html-pdf');
 const fs = require('fs');
 const path = require('path');
@@ -95,20 +95,20 @@ const LoginAdmin = async(req, res, next) => {
 
                 if(admin.is_admin === 0){
                     
-                    res.render('Login', {message:'Email or Password is Incorrect !'});
+                    res.status(400).send({message:'Email or Password is Incorrect !'});
                 }else{
                     req.session.user_id = admin._id;
 
-                    res.redirect('/admin/profile')
+                    res.redirect('/Admin-Profile.html')
                 }
 
             }else{
 
-                res.render('Login', {message:'Email or Password is Incorrect !'});
+                res.status(400).send({message:'Email or Password is Incorrect !'});
             }
 
         }else{
-            res.render('Login', {message:'Email or Password is Incorrect !'});
+            res.status(400).send({message:'Email or Password is Incorrect !'});
         }
 
     } catch (error) {
@@ -122,7 +122,7 @@ const ShowAdminHome = async(req, res, next) => {
         
         const user = await UserModel.findById({_id:req.session.user_id})
 
-        res.render('Profile',{admin:user})
+        res.send({admin:user})
 
     } catch (error) {
         console.log(error.message);
@@ -132,46 +132,56 @@ const ShowAdminHome = async(req, res, next) => {
 const ShowAdminDashboard = async(req, res, next) => {
     try {
 
-            var search = '';
-            if(req.query.search){
-                search = req.query.search;
+        const data = UserModel.find({}, (err, data) => {
+            if (err) {
+              // Sending Error If error
+              res.send(err);
+            } else {
+              // Sending Data to the Front End
+              res.send(data);
             }
+          });
+
+            // var search = '';
+            // if(req.query.search){
+            //     search = req.query.search;
+            // }
       
-            var page = 1;
-            if(req.query.page){
-                page = req.query.page;
-            };
+            // var page = 1;
+            // if(req.query.page){
+            //     page = req.query.page;
+            // };
 
-            const limit = 5;
+            // const limit = 5;
       
 
-            const user = await UserModel.find({
-                is_admin:0,
-                $or:[
-                    { name : { $regex : '.*'+search+'.*', $options:'i' } },
-                    { email : { $regex : '.*'+search+'.*', $options:'i' } },
-                    { mobile : { $regex : '.*'+search+'.*', $options:'i' } }
-                ]
-            })
-            .limit(limit * 1)
-            .skip((page - 1) * limit)
-            .exec();
+            // const user = await UserModel.find({
+            //     is_admin:0,
+            //     $or:[
+            //         { name : { $regex : '.*'+search+'.*', $options:'i' } },
+            //         { email : { $regex : '.*'+search+'.*', $options:'i' } },
+            //         { mobile : { $regex : '.*'+search+'.*', $options:'i' } }
+            //     ]
+            // })
+            // .limit(limit * 1)
+            // .skip((page - 1) * limit)
+            // .exec();
 
-            const count = await UserModel.find({
-                is_admin:0,
-                $or:[
-                    { name : { $regex : '.*'+search+'.*', $options:'i' } },
-                    { email : { $regex : '.*'+search+'.*', $options:'i' } },
-                    { mobile : { $regex : '.*'+search+'.*', $options:'i' } }
-                ]
-            }).countDocuments()
+            // const count = await UserModel.find({
+            //     is_admin:0,
+            //     $or:[
+            //         { name : { $regex : '.*'+search+'.*', $options:'i' } },
+            //         { email : { $regex : '.*'+search+'.*', $options:'i' } },
+            //         { mobile : { $regex : '.*'+search+'.*', $options:'i' } }
+            //     ]
+            // }).countDocuments()
 
 
-            res.render("Dashboard", {
-                Users : user,
-                totalPages : Math.ceil(count/limit),
-                currentPage : page
-            });
+            // res.render("Dashboard", {
+            //     Users : user,
+            //     totalPages : Math.ceil(count/limit),
+            //     currentPage : page
+            // });
 
     } catch (error) { 
         console.log(error.message);
@@ -182,7 +192,7 @@ const LogoutAdmin = async(req, res, next) => {
     try {
         
         req.session.destroy();
-        res.redirect('/admin')
+        res.redirect('/Admin-Login.html')
 
     } catch (error) {
         console.log(error.message);
@@ -291,28 +301,41 @@ const ShowAdminEdit = async(req, res, next) => {
 const AdminEditUser = async(req, res, next) => {
     try {
         
-        const user = await UserModel.findByIdAndUpdate({_id:req.query.id},{$set:{name:req.body.name, email:req.body.email, mobile:req.body.mobile, is_verified:req.body.Verify}});
+        const user = await UserModel.findByIdAndUpdate({_id:req.params.id},{$set:{name:req.body.name, email:req.body.email, mobile:req.body.mobile, is_verified:req.body.Verify}});
 
-            res.redirect('/admin/dashboard');
+            res.status(200).send({message:"Updated SuccessFully!"});
         
     } catch (error) {
         console.log(error.message);
     }
 };
+
+// const AdminDeleteUser = async(req, res, next) => {
+//     try {
+        
+//       const id = req.query.id;
+
+//       await UserModel.deleteOne({_id:id})
+
+//       res.redirect('/Dashboard.html')
+
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// };
 
 const AdminDeleteUser = async(req, res, next) => {
     try {
         
-      const id = req.query.id;
+        await UserModel.deleteOne({_id:req.params.id})
 
-      await UserModel.deleteOne({_id:id})
-
-      res.redirect('/admin/dashboard')
+        res.status(200).send({message:"User Deleted Successfully!"})
 
     } catch (error) {
-        console.log(error.message);
+        console.log(error)
     }
-};
+
+  };
 
 // ################## EXPORT USER DATA INTO ( EXCEL )
 

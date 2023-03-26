@@ -1,0 +1,299 @@
+<% include('../Layouts/Header.ejs') %>
+<link rel="stylesheet" href="/Stylesheets/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+
+<style>
+    table, tr, td,th{
+        border: 1px solid var(--secondary);
+    }
+
+    .export{
+        margin-right: 1rem;
+        color: var(--pure);
+    }
+    .export:hover{
+        color: var(--primary);
+    }
+    .container-2{
+        padding:3rem;
+    }
+    .search form .inp{
+        padding: .5rem 1rem;
+        border-radius: 1rem;
+
+    }
+    .search form .inp:focus{
+        border: 1px solid var(--primary);
+    }
+    .search form .submit{
+        padding: .5rem 1rem;
+        border-radius: .5rem;
+        background-color: var(--primary);
+        color: var(--pure);
+    }
+    .search form .submit:hover{
+        background: var(--pure);
+        color: var(--secondary);
+        cursor: pointer;
+    }
+
+    .theading{
+        font-size: 1.2rem;
+        padding-bottom: .5rem;
+    }
+    .tdata{
+        padding: 1rem;
+    }
+    table, td, th
+    {
+        padding: 1rem;
+        border-radius: .5rem;
+    }
+    th{
+        background-color: var(--secondary);
+        color: var(--pure);
+    }
+
+    
+
+
+</style>
+
+
+<div class="main-wrapper">
+
+    <div class="nav-background">
+
+      <div class="mobile-logo">
+
+        <a href=""><span class="Highlight">S</span>k <span class="Highlight">D</span>igi <span class="Highlight">T</span>ech</a>
+
+      </div>
+
+      <div class="nav-links">
+
+        <ul>
+
+
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Gallery</a></li>
+          <li><a href="#">Blogs</a></li>
+         <li><a href="#">Contact Us</a></li>
+
+
+        </ul>
+
+      </div>
+
+      <div class="contact flex align-items">
+
+        <i class="fa-solid fa-user"></i> 
+        <div>
+
+         <h4><a href="/index">Profile</a></h4>
+
+        </div>
+
+      </div>
+
+      <div class="time flex align-items">
+
+        <i class="fa-solid fa-calendar"></i>
+       
+        <div>
+
+         <h4> <a href="#">Calanders</a> </h4>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="site-content-wrapper">
+
+      <div class="nav-trigger">
+
+        <i class="fa-solid fa-bars"></i>
+
+      </div>
+
+      <div class="site-content">
+
+
+<header class="header">
+
+    <div class="container">
+
+          <!-- <div>
+
+            <a class="export" 
+             href="/admin/export-users">Export Users Excel</a>
+            <a class="export"  href="/admin/export-users-pdf">Export Users PDF</a>
+
+          </div> -->
+          <div class="search">
+
+            <form>
+
+                <input class="inp" type="text" placeholder="Search Here" name="search">
+                <input class="submit" type="submit" value="Search">
+            
+            </form>
+
+          </div>
+
+          <div class="profile">
+
+              <div>
+
+                  <i class="fa-solid fa-home"></i> 
+                  <a href="/admin/profile">Back</a>
+
+              </div>
+
+              <span class="divider">|</span>
+
+              <div>
+
+                <i class="fa-solid fa-sign-out"></i>
+                <a href="/admin/logout">Logout</a>
+            </div>
+
+          </div>
+
+    </div>
+
+
+  </header>
+
+
+  <h1 style="text-align: center; padding-top: 1rem;">All<a href=""
+    style="color: var(--primary); font-family: 'Dancing Script', cursive;">
+    Students:-
+</a></h1>
+
+<div class="container-2">
+
+<!-- <a href="/admin/export-users">Export Users Excel</a>
+<a href="/admin/export-users-pdf">Export Users PDF</a> -->
+
+<!-- <form>
+
+    <input type="text" placeholder="Search Here" name="search">
+    <input type="submit" value="Search">
+
+</form> -->
+
+<table style="width: 100%;">
+
+    <tr> 
+
+        <th class="theading">Image</th>
+        <th class="theading">Name</th>
+        <th class="theading">Father Name</th>
+        <th class="theading">Email</th>
+        <th class="theading">Gender</th>
+        <th class="theading">Address</th>
+        <th class="theading">Confirmed</th>
+        <th class="theading">Actions</th>
+
+    </tr>
+
+    <%
+    
+            if(Users.length > 0){
+
+                for(i=0; i<Users.length; i++){
+                    %>
+
+                        <tr>
+                            
+                            <td class="tdata"> <img style="width: 4rem; height: 4rem; border-radius: 50%; margin-top: 1rem;" src="/Uploads/<%= Users[i].image %>" alt="<%= Users[i].image %>"></td>
+                            <td class="tdata"><%= Users[i].name %></td>
+                            <td class="tdata"><%= Users[i].fathername %></td>
+                            <td class="tdata"><%= Users[i].email %></td>
+                            <td class="tdata"><%= Users[i].gender %></td>
+                            <td class="tdata"><%= Users[i].address %></td>
+                            <td class="tdata"><%
+                                
+                                    if(Users[i].is_confirm == 0){
+
+                                        %>
+
+                                            <p>No</p>
+
+                                        <%
+
+                                    }else{
+                                        %>
+
+                                            <p>Yes</p>
+
+                                        <%
+                                    }
+
+                                %></td>
+
+                                <td>
+                                    <a class="btn btn-primary" href="/edit-student?id=<%= Users[i]._id %>"><i class="fas fa-edit"></i></a>
+                                    <br><br><br>
+                                    <a class="btn btn-secondary" href="/delete-student?id=<%= Users[i]._id %>"><i class="fa-solid fa-trash-can"></i></a>
+                                </td>
+
+
+                        </tr>
+
+                    <%
+                }
+
+            }else{
+                %>
+                
+                    <tr>
+                        
+                        <td colspan="5">No User Found</td>
+
+                    </tr>
+
+                <%
+            }
+
+    %>
+
+</table>
+<br><br>
+
+<%
+
+    for(j = 1; j <= totalPages; j++ ){
+
+        %>
+     
+        <a class="btn btn-secondary" href="?page=<%= j %>"><%= j %></a>
+    
+        <%
+
+    }
+
+%>
+
+
+
+
+</div>
+</div>
+</div>
+</div>
+
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script> 
+  <script src="/Javascript/app.js"></script>
+
+  
+<% include('../Layouts/Footer.ejs') %>

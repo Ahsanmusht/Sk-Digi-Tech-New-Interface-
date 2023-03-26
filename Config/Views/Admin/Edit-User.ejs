@@ -1,0 +1,239 @@
+<% include('../Layouts/Header.ejs') %>
+<link rel="stylesheet" href="/Stylesheets/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+
+<style>
+
+    .export{
+        margin-right: 1rem;
+        color: var(--pure);
+    }
+    .export:hover{
+        color: var(--primary);
+    }
+    .conatiner-2{
+        padding:3rem;
+    }
+    .conatiner-2 form{
+        width: 100%;
+        text-align: center;
+        padding-top: 2rem;
+
+    }
+
+    .conatiner-2 form .edit{
+        padding: 1rem 1.5rem;
+        border: 1px solid #777;
+        margin-top: 1rem;
+        width: 55%;
+        border-radius: .5rem;
+    }
+
+    
+
+    .search form .inp{
+        padding: .5rem 1rem;
+        border-radius: 1rem;
+
+    }
+    .search form .inp:focus{
+        border: 1px solid var(--primary);
+    }
+    .search form .submit{
+        padding: .5rem 1rem;
+        border-radius: .5rem;
+        background-color: var(--primary);
+        color: var(--pure);
+    }
+    .btn{
+        margin-top: 1rem;
+        display: inline-block;
+        width: 55%;
+    }
+
+    .search form .submit:hover{
+        background: var(--pure);
+        color: var(--secondary);
+        cursor: pointer;
+    }
+
+    .theading{
+        font-size: 1.2rem;
+        padding-bottom: .5rem;
+        border-bottom: 1px solid var(--primary);
+    }
+    .tdata{
+        padding-bottom: 2rem;
+        padding-left: 3rem;
+    }
+
+
+
+</style>
+
+
+<div class="main-wrapper">
+
+    <div class="nav-background">
+
+      <div class="mobile-logo">
+
+        <a href=""><span class="Highlight">S</span>k <span class="Highlight">D</span>igi <span class="Highlight">T</span>ech</a>
+
+      </div>
+
+      <div class="nav-links">
+
+        <ul>
+
+
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Gallery</a></li>
+          <li><a href="#">Blogs</a></li>
+         <li><a href="#">Contact Us</a></li>
+
+
+        </ul>
+
+      </div>
+
+      <div class="contact flex align-items">
+
+        <i class="fa-solid fa-user"></i> 
+        <div>
+
+         <h4><a href="/index">Profile</a></h4>
+
+        </div>
+
+      </div>
+
+      <div class="time flex align-items">
+
+        <i class="fa-solid fa-calendar"></i>
+       
+        <div>
+
+         <h4> <a href="#">Calanders</a> </h4>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="site-content-wrapper">
+
+      <div class="nav-trigger">
+
+        <i class="fa-solid fa-bars"></i>
+
+      </div>
+
+      <div class="site-content">
+
+
+
+<header class="header">
+
+    <div class="container">
+
+          <div>
+
+            <a class="export" 
+             href="/admin/export-users">Export Users Excel</a>
+            <a class="export"  href="/admin/export-users-pdf">Export Users PDF</a>
+
+          </div>
+          <div class="search">
+
+            <form>
+
+                <input class="inp" type="text" placeholder="Search Here" name="search">
+                <input class="submit" type="submit" value="Search">
+            
+            </form>
+
+          </div>
+
+          <div class="profile">
+
+              <div>
+
+                  <i class="fa-solid fa-home"></i> 
+                  <a href="/admin/dashboard">Back</a>
+
+              </div>
+
+              <span class="divider">|</span>
+
+              <div>
+
+                <i class="fa-solid fa-sign-out"></i>
+                <a href="/admin/logout">Logout</a>
+            </div>
+
+          </div>
+
+    </div>
+
+
+  </header>
+
+
+
+<div class="conatiner-2">
+
+
+    <h1 style="text-align: center;">Edit<a href=""
+        style="color: var(--primary); font-family: 'Dancing Script', cursive;">
+        User
+    </a></h1>
+
+<form action="" method="post">
+
+        <input class="edit" type="text" value="<%= User.name %>" name="name" placeholder="Name">
+            <br>
+        <input class="edit" type="email" value="<%= User.email %>" name="email" placeholder="Email">
+            <br>
+        <input class="edit" type="number" value="<%= User.mobile %>" name="mobile" placeholder="Mobile">
+        <br><br>
+        <label>Verified</label>
+   
+        <input type="radio" name="Verify" value="1" <% if(User.is_verified == 1){
+            %>
+
+            checked
+
+            <%
+        } %>>
+        <label>Unverified</label>
+        <input type="radio" name="Verify" value="0" <% if(User.is_verified == 0){
+            %>
+
+            checked
+
+            <%
+        } %>>
+
+        <input type="hidden" name="" id="id" value="<%= User._id %>"> 
+            <br>
+        <input class="btn btn-secondary" type="submit" value="Save">
+</form>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script> 
+  <script src="/Javascript/app.js"></script>
+
+<% include('../Layouts/Footer.ejs') %>

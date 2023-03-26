@@ -2,25 +2,26 @@ const express = require('express');
 const Admin_Router = express();
 const session = require('express-session');
 const Config = require('../Config/Config');
-Admin_Router.use(session({secret:Config.SessionSecret}))
 const bodyParser = require('body-parser');
 const Admin_Controller = require('../Controllers/Admin.Controller');
 
+Admin_Router.use(session({secret:Config.SessionSecret}))
 Admin_Router.use(bodyParser.json());
 Admin_Router.use(bodyParser.urlencoded({extended:true}));
+Admin_Router.use(express.static('../Frontend/Admin'))
+// Admin_Router.set('view engine', 'ejs');
+// Admin_Router.set('views', './Views/Admin');
 
-Admin_Router.set('view engine', 'ejs');
-Admin_Router.set('views', './Views/Admin');
 
 const Admin_Auth = require('../MiddleWare/Admin.Authentication');
 
 Admin_Router.get('/', Admin_Auth.isLogout, Admin_Controller.ShowAdminLogin)
 
-Admin_Router.get('/profile', Admin_Auth.isLogin, Admin_Controller.ShowAdminHome)
+Admin_Router.get('/admin-profile', Admin_Auth.isLogin, Admin_Controller.ShowAdminHome)
 
 Admin_Router.get('/dashboard' ,Admin_Auth.isLogin ,Admin_Controller.ShowAdminDashboard) // auth.islogin lagana hai bad mai
 
-Admin_Router.get('/logout', Admin_Auth.isLogin, Admin_Controller.LogoutAdmin);
+Admin_Router.get('/admin-logout', Admin_Auth.isLogin, Admin_Controller.LogoutAdmin);
 
 Admin_Router.get('/forgot', Admin_Auth.isLogout, Admin_Controller.ShowAdminForgot);
 
@@ -30,13 +31,13 @@ Admin_Router.get('/forgot-password',Admin_Auth.isLogout, Admin_Controller.ShowFo
 
 Admin_Router.post('/forgot-password', Admin_Controller.ResetPassword);
 
-Admin_Router.post('/', Admin_Controller.LoginAdmin);
+Admin_Router.post('/admin-login', Admin_Controller.LoginAdmin);
 
 Admin_Router.get('/edit-user', Admin_Auth.isLogin, Admin_Controller.ShowAdminEdit)
 
-Admin_Router.post('/edit-user', Admin_Controller.AdminEditUser);
+Admin_Router.post('/edit-user/:id', Admin_Controller.AdminEditUser);
 
-Admin_Router.get('/delete-user', Admin_Auth.isLogin, Admin_Controller.AdminDeleteUser)
+Admin_Router.delete('/delete/:id', Admin_Auth.isLogin, Admin_Controller.AdminDeleteUser)
 
 Admin_Router.get('/export-users', Admin_Auth.isLogin, Admin_Controller.ExportUsers)
 
